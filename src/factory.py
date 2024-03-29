@@ -4,7 +4,7 @@ import sys
 
 from flask import Flask, render_template
 
-from src.modulos import bootstrap
+from src.modulos import bootstrap, minify
 
 
 def create_app(config_filename: str = 'config.dev.json') -> Flask:
@@ -24,6 +24,8 @@ def create_app(config_filename: str = 'config.dev.json') -> Flask:
         sys.exit(1)
 
     bootstrap.init_app(app)
+    if app.config.get('MINIFY', False):
+        minify.init_app(app)
 
     @app.route('/')
     @app.route('/index')
